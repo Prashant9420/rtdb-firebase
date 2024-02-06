@@ -1,0 +1,48 @@
+.title{
+  margin-top:30px;
+  padding:10px 10px;
+  border:10px solid white;
+  border-radius:10px;
+  box-shadow:-10px 10px 8px grey;
+  color:white;
+  background-color:rgb(0,0,0,0.2);
+}
+.country{
+  display:flex;
+  flex-direction:column;
+  height:20%;
+  justify-content:space-between;
+  width:30%;
+}
+.back{
+  position:absolute;
+  z-index: -1;
+  object-fit:cover;
+  position: fixed;
+  /* border: 2px solid red; */
+  width: 100vw;
+  height: 100vh;
+
+}
+.activeUsers{
+  position: absolute;
+  left: 0;
+  margin-left: 10px;
+  margin-top: 10px;
+}
+.activeUsers table thead tr th{
+  padding: 10px;
+  border: 1px solid white;
+  border-collapse: collapse;
+  background-color: rgb(0,0,0,0.6);
+  color: white;
+}
+@media screen and (max-width:590px) {
+  .country>Button{ 
+      margin: 20px 0px;
+  }
+  
+  .country{
+  width: 90%;    
+  }
+}
