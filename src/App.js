@@ -38,6 +38,9 @@ function App() {
     const filteredUsers = filteredActiveUsers.filter((user) => user.date === date);
     setActiveUsers(filteredUsers);
   };
+  window.addEventListener('beforeunload', function(event) {
+    handleSignOut();
+  });
   const getData = async () => {
     // console.log(JSON.parse(localStorage.getItem('userData')).uid);
     const dbRef = ref(database, `users/`);
