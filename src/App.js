@@ -29,6 +29,30 @@ function App() {
     const newUsers = activeUsers.filter((user, i) => i !== index);
     setActiveUsers(newUsers);
   };
+  const handleSignOut =async () => {
+    const auth = getAuth();
+    await signOut(auth)
+      .then(async() => {
+        // Sign-out successful.
+        // set(ref(database, `users/${JSON.parse(localStorage.getItem('userData')).uid}`), {
+        //   status: "inactive",
+        // })
+        const userRef = ref(
+          database,
+          `users/${JSON.parse(localStorage.getItem("userData"))?.uid}`
+        );
+
+        // Remove the user's data node
+        await remove(userRef);
+        localStorage.removeItem("userData");
+        console.log("User data deleted successfully");
+      })
+      .catch((error) => {
+        // An error happened.
+        console.log(error);
+      });
+    navigate("/signin");
+  };
   const filterActiveUsersByDate = (date) => {
     // getData();
     if (date === "") {
@@ -38,9 +62,7 @@ function App() {
     const filteredUsers = filteredActiveUsers.filter((user) => user.date === date);
     setActiveUsers(filteredUsers);
   };
-  window.addEventListener('beforeunload', function(event) {
-    handleSignOut();
-  });
+  window.addEventListener('beforeunload',handleSignOut, async function(event) {});
   const getData = async () => {
     // console.log(JSON.parse(localStorage.getItem('userData')).uid);
     const dbRef = ref(database, `users/`);
@@ -81,30 +103,7 @@ function App() {
     }
     setLoad(false);
   };
-  const handleSignOut = () => {
-    const auth = getAuth();
-    signOut(auth)
-      .then(() => {
-        // Sign-out successful.
-        // set(ref(database, `users/${JSON.parse(localStorage.getItem('userData')).uid}`), {
-        //   status: "inactive",
-        // })
-        const userRef = ref(
-          database,
-          `users/${JSON.parse(localStorage.getItem("userData"))?.uid}`
-        );
-
-        // Remove the user's data node
-        remove(userRef);
-        localStorage.removeItem("userData");
-        console.log("User data deleted successfully");
-      })
-      .catch((error) => {
-        // An error happened.
-        console.log(error);
-      });
-    navigate("/signin");
-  };
+  
   const changeStatus = (e) => {
     console.log(e.target.value);
     set(
